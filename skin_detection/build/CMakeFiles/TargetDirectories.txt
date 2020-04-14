@@ -1,0 +1,3 @@
+/home/sky/Projects/OpenCV/skin_detection/build/CMakeFiles/edit_cache.dir
+/home/sky/Projects/OpenCV/skin_detection/build/CMakeFiles/skin_detection.dir
+/home/sky/Projects/OpenCV/skin_detection/build/CMakeFiles/rebuild_cache.dir
