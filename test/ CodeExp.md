@@ -39,11 +39,11 @@
     * 表示从工程目录下把一幅名为dota.jpg类型的图像载入到Mat类型的srcImage变量中
 
 ---
+# 第三章 HighGUI图形用户界面初步
 
-# 图像的载入与显示
+## 图像的载入与显示
 
-
-## imread()函数
+### imread()函数
 
 * 用于读取文件中的图片到OpenCV中
 * <font color=# size=3>Mat imread(const string& filename, intflags=1)</font>
@@ -65,7 +65,7 @@
 
 ---
 
-## imshow()函数
+### imshow()函数
 
 * 用于在指定的窗口显示一幅图像，函数原型为：
 * **void imshow(const string& winname, InputArray mat)**
@@ -74,7 +74,7 @@
 
 ---
 
-## imwrite()函数-输出图像到文件 
+### imwrite()函数-输出图像到文件 
 
 * 声明如下：
 * **bool imwrite(const string& filename, InputArray img, const vector<int>& params=vector<int>)**
@@ -86,10 +86,11 @@
 
 
 ---
+# 第四章 OpenCV数据结构与基本绘图
 
-# 4.1基础图像容器Mat
+## 4.1基础图像容器Mat
 
-## 4.1.2 Mat结构的使用
+### 4.1.2 Mat结构的使用
 
 * Mat是一个类，由两个数据部分组成
     * 矩阵头（包含矩阵尺寸、存储方法、存储地址等信息）
@@ -109,7 +110,7 @@
     * A.copyTo(G);
     * 现在改变F或者G不会影响Mat信息头所指向的矩阵。
 
-## 4.1.3 像素值的存储方法
+### 4.1.3 像素值的存储方法
 
 * 存储像素值需要制定颜色空间和数据类型。
 
@@ -119,7 +120,7 @@
     * YCrCb 在JPEG图像格式中广泛使用
     * CIE L*a*b* 是一种在感知上均匀的颜色空间，它适合用来度量两个颜色之间的距离。
 
-## 4.1.4 显式创建Mat对象的七种方法
+### 4.1.4 显式创建Mat对象的七种方法
 
 1. 使用Mat()构造函数
 
@@ -138,12 +139,93 @@
 
 2. 在C\C++中通过构造函数进行初始化
 
-    代码：adf
+    代码：
 
         int sz[3] = {2,2,2};
         Mat L(3,sz,CV_8UC,Scalar::all(0))
 
-    
+### 4.1.5 OpenCV中的格式化输出方法
+
+### 4.1.6 输出其他常用数据结构
+
+---
+
+## 4.2 常用数据结构和函数
+
+### 4.2.1 点的表示：Point类
+
+表示：
+
+    Point point;
+    point.x = 10;
+    point.y = 8;
+
+或者：
+
+    Point point = point(10,8)
+
+### 4.2.2 颜色的表示：Scalar类
+
+Scalar()表示具有4个元素的数组，用于传递像素值。
+
+表示：
+
+    Scalar(a,b,c)
+
+定义的RGB颜色值：红色分量为c，绿色分量为b，蓝色分量为a。BGR
+
+### 4.2.3 尺寸的表示: Size类
+
+代码：
+    Size(width,height)
+    Size(5,5);//构造出的Size宽度和高度都为5,即XXX.width和XXX.height都为5
+
+### 4.2.4 矩形的表示： Rect类
+
+* 成员变量：x,y,width,height，分别为左上角点的坐标和举行的宽和高。
+* 常用成员函数：
+    * Size() 返回值为Size;
+    * area() 返回矩形的面积;
+    * contains(Point) 判断点是否在矩形内;
+    * inside(Rect) 判断矩形是否在该矩形内;
+    * tl() 返回左上角点坐标
+    * br() 右下角点坐标。
+    * 求两个矩形的交集和并集
+        * Rect rect = rect1 & rect2
+        * Rect rect = rect1 | rect2
+    * 想让矩形平移和缩放：
+        * Rect rectShift = rect + point;
+        * Rect rectScale = rect + size;
+
+### 4.2.5 颜色空间转换： cvtColor()函数
+
+* 颜色空间转换函数，可以实现RGB颜色向HSV,HSI等颜色空间转换，也可以转换为灰度图像。
+
+原型：
+
+    C++: void cvtColor(InputArray src, OutputArray dst, int code, int dstCn=0)
+
+* 参数：
+    * 第一个参数是输入图像
+    * 第二个，输出图像
+    * 第三个，目标图像的通道数，若该参数是0,表示目标图像取源图像的通道数。
+
+示例：
+
+    OpenCV3版：
+    cvtColor(srcImage, dstImage, COLOR_GRAY2BGR); //转换灰度到RGB
+
+---
+
+## 4.3 基本图形的绘制
+
+---
+
+# 第五章 core组件进阶
+
+
+
+
 
 
 
