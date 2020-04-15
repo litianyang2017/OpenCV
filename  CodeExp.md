@@ -144,6 +144,31 @@
         int sz[3] = {2,2,2};
         Mat L(3,sz,CV_8UC,Scalar::all(0))
 
+4. 利用Create()函数
+
+    利用Mat类中的Create()成员函数进行Mat类的初始化操作，示范代码如下：
+
+        M.create(4,4,CV_8UC(2));
+
+    此方法不能为矩阵设处值，只是在改变尺寸时重新为矩阵数据开辟内存而已。
+
+5. 采用Matlab式的初始化方式
+
+    zeros(), ones(), eyes()
+    使用以下方式指定尺寸和数据类型：
+
+        Mat E = Mat::eye(4,4,CV_64F);
+
+        Mat O = Mat::ones(2,2,CV_32F);
+
+        Mat Z = Mat::zeros(3,3,CV_8UC1);
+
+7. 为已存在的对象创建新信息头
+
+    使用成员函数clone() 或者 copyTo()为一个已存在的Mat对象创建一个新的信息头，代码如下：
+
+        Mat RowClone = C.row(1).clone();
+
 ### 4.1.5 OpenCV中的格式化输出方法
 
 ### 4.1.6 输出其他常用数据结构
@@ -219,9 +244,65 @@ Scalar()表示具有4个元素的数组，用于传递像素值。
 
 ## 4.3 基本图形的绘制
 
+## 收集：Mat的成员变量和成员函数
+
+* 图像的宽和高： rows, cols
+* 图像的通道数： channels() // 灰度图的通道数为1,彩色图的通道数为3
+* 每行的像素值：  
+    * int colNumber = outputImage.cols * outputImage.channels();
+    // 列数 × 通道数 = 每一行元素的个数
+* 为了简化指针运算，Mat类提供了ptr函数可以得到图像任意行的首地址。ptr是一个模板函数，它返回第i行的首地址：
+    * uchar* data = outputImage.ptr<uchar>(i); //获取第i行的首地址
+    
+代码：
+
+    (Mat inputImage;) //创建或者clone一个图片
+    int rowNumber = InputImage.rows; //行数
+    int colNumber = InputImage.cols*InputImage.channels(); 
+    // 列数×通道数=每一行元素的个数
+    outputImage = InputImage.clone();
+    uchar* data = outputImage.ptr<uchar>(i); 
+    // 获取第i行的首地址
+    // 以上来源： UsePointerAccessPixel
+
 ---
 
 # 第五章 core组件进阶
+
+## 5.1 访问图像中的元素
+
+### 5.1.1 图像在内存中的存储方式
+
+### 5.1.2 颜色空间缩减
+
+公式：
+
+$I_{new} = (\frac{I_{old}}{10})*10$
+
+拓展：
+原来的图像是256种颜色，希望把它变成64种颜色，只需要除以4（整除）以后再乘以4就可以
+
+### 5.1.3 LUT函数： Look up table 操作
+
+函数：
+
+    operationsOnArrays::LUT()<lut>
+
+### 5.1.4 计时函数
+
+函数：
+
+    getTickCount() // 返回CPU自某个事件（如启动电脑）以来走过的时钟周期数
+    getTickFrequency() // 返回CPU一秒钟所走的时钟周期数
+
+### 5.1.5 访问图像中像素的三类方法
+
+1. 指针访问： C操作符[]
+    * 
+
+2. 迭代器 iterator
+
+3. 动态地址计算
 
 
 
@@ -250,7 +331,6 @@ Scalar()表示具有4个元素的数组，用于传递像素值。
     * 让图片窗口一直显示，等待任意按键按下
 * imread 
     * 载入图像
-
 ---
 
 # 模块API
